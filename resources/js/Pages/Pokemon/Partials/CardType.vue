@@ -27,14 +27,16 @@
 
 <template>
     <div class="w-1/4 rounded overflow-hidden shadow-md">
-        <img class="w-full" :src="imageUrl" alt="">
+        <img class="w-full" :src="imageUrl" alt="Pokemon">
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2">{{ name.toUpperCase() }}</div>
             </div>
             <div class="px-6 pt-4 pb-2">
             <span class="w-1/2 overflow-hidden bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Pokemones: {{ pokemonsCount }}</span>
             <span class="w-1/2 overflow-hidden bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Movs: {{ movesCount }}</span>
-            <button class="btn btn-blue"><a :href="'/category/'+name">Ver todos</a></button>
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <a :href="'/categories/'+name">Ver todos</a>
+            </button>
         </div>
     </div>
 </template>

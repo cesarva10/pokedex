@@ -37,14 +37,6 @@ class FavoriteController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Favorite $pokemon)
-    {
-        return view('favorites.show', compact('pokemon'));
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Favorite $pokemon)

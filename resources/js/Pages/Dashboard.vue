@@ -1,8 +1,8 @@
 <script setup>
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-    import Carousel from '@/Components/Pokemon/Carousel.vue';
-    import CardTypeList from '@/Components/Pokemon/CardTypeList.vue';
-    import CardFavoriteList from '@/Components/Pokemon/CardFavoriteList.vue';
+    import Carousel from '@/Pages/Pokemon/Partials/Carousel.vue';
+    import CardTypeList from '@/Pages/Pokemon/Partials/CardTypeList.vue';
+    import CardFavoriteList from '@/Pages/Pokemon/Partials/CardFavoriteList.vue';
     import { Head } from '@inertiajs/vue3';
 
     defineProps({
@@ -19,14 +19,14 @@
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Inicio" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Pokedex</h2>
         </template> 
 
-        <Carousel :limit=4 />
+        <Carousel />
 
         <CardFavoriteList :favorites="recentFavorites" :limit=4 />
 

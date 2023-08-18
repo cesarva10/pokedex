@@ -1,5 +1,5 @@
 <script setup>
-    import CardType from '@/Components/Pokemon/CardType.vue';
+    import CardType from '@/Pages/Pokemon/Partials/CardType.vue';
 
     const { types } = defineProps({
         types: {

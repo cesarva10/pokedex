@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Favorite;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use Inertia\Inertia;
@@ -17,14 +18,27 @@ class PokemonController extends Controller
         ]);
     }
 
-    public function getPokemon(Request $request){
+    /**
+     * Display the specified resource.
+     */
+    public function show(String $pokemon)
+    {  
+        $pokemon = $this->getPokemon($pokemon);
+        $favorite = $this->isFavorite($pokemon->id);
+
+        return Inertia::render('Pokemon/Show', [
+            'pokemon' => $pokemon,
+            'favorite' => $favorite
+        ]);
+    }
+
+    public function getPokemon(String $pokemon){
         $client = new Client();
 
-        $gRequest = new GuzzleRequest('GET', 'https://pokeapi.co/api/v2/pokemon/'.$request->name);
+        $gRequest = new GuzzleRequest('GET', 'https://pokeapi.co/api/v2/pokemon/'.$pokemon);
         $response = $client->send($gRequest);
 
-        $response_body = (string)$response->getBody();
-        dd($response_body);
+        return json_decode($response->getBody());
     }
 
     public function getPokemons(Request $request){
@@ -57,6 +71,14 @@ class PokemonController extends Controller
     }
 
     public function getRecentFavorites($limit) {
-        return Favorite::latest('created_at')->take(4)->get();
+        return Favorite::latest('created_at')
+                        ->take(4)
+                        ->get();
+    }
+
+    public function isFavorite($pokemon) {
+        return Favorite::where('user', Auth::id())
+                        ->where('pokemon', $pokemon)
+                        ->first();
     }
 }

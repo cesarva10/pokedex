@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
@@ -21,19 +20,20 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
+                                    <img class="block h-9 w-auto fill-current text-gray-800" src="/images/logo.png" alt="Logo Pokedex"/>
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboards
+                                    Dashboard
                                 </NavLink>
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboards
+                                <NavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
+                                    Favoritos
+                                </NavLink>
+                                <NavLink :href="route('pokemons.index')" :active="route().current('pokemons.index')">
+                                    Pokemones
                                 </NavLink>
                             </div>
                         </div>

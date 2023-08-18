@@ -1,29 +1,38 @@
 <script setup>
+    import { onMounted } from 'vue';
+    import { initFlowbite } from 'flowbite';
+    
     defineProps({
-        limit: {
-            type: Number,
-            default: 0
-        },
         pokemonType: {
             type: Number,
             default: 0
         }
-    });
+    });    
+
+    const banners = [
+        "banner1.jpg",
+        "banner2.jpg",
+        "banner3.jpg",
+        "banner4.jpg",
+        "banner5.jpg"
+    ]
+
+    onMounted(() => {
+        initFlowbite();
+    })
+
 </script>
 
-<template>    
+<template>
     <div class="py-5">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div id="animation-carousel" class="relative w-full" data-carousel="static">
                         <!-- Carousel wrapper -->
-                        <div class="relative h-56 overflow-hidden rounded-lg md:h-96">        
-                            <div v-for="(item, index) in limit"
-                                :key="index"
-                                class="hidden duration-200 ease-linear"
-                                data-carousel-item>
-                                <img src="https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-54.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                        <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                            <div v-for="(banner, index) in banners" class="hidden duration-200 ease-linear" data-carousel-item>
+                                <img :src="'/images/banner/'+banner" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Banner">
                             </div>
                         </div>
                         <!-- Slider controls -->
@@ -48,4 +57,4 @@
             </div>
         </div>
     </div>
-</template>
+</template>        
