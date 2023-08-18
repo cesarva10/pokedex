@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pokemon;
 use App\Models\Favorite;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class PokemonController extends Controller

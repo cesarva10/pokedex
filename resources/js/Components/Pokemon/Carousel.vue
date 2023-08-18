@@ -18,26 +18,12 @@
                 <div class="p-6 text-gray-900">
                     <div id="animation-carousel" class="relative w-full" data-carousel="static">
                         <!-- Carousel wrapper -->
-                        <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                            <!-- Item 1 -->
-                            <div class="hidden duration-200 ease-linear" data-carousel-item>
-                                <img src="" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                            </div>
-                            <!-- Item 2 -->
-                            <div class="hidden duration-200 ease-linear" data-carousel-item>
-                                <img src="" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                            </div>
-                            <!-- Item 3 -->
-                            <div class="hidden duration-200 ease-linear" data-carousel-item="active">
-                                <img src="" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                            </div>
-                            <!-- Item 4 -->
-                            <div class="hidden duration-200 ease-linear" data-carousel-item>
-                                <img src="" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                            </div>
-                            <!-- Item 5 -->
-                            <div class="hidden duration-200 ease-linear" data-carousel-item>
-                                <img src="" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                        <div class="relative h-56 overflow-hidden rounded-lg md:h-96">        
+                            <div v-for="(item, index) in limit"
+                                :key="index"
+                                class="hidden duration-200 ease-linear"
+                                data-carousel-item>
+                                <img src="https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-54.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                             </div>
                         </div>
                         <!-- Slider controls -->

@@ -30,12 +30,11 @@
         <img class="w-full" :src="imageUrl" alt="">
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2">{{ name.toUpperCase() }}</div>
-            <p class="text-gray-700 text-base">{{ description }}</p>
             </div>
             <div class="px-6 pt-4 pb-2">
             <span class="w-1/2 overflow-hidden bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Pokemones: {{ pokemonsCount }}</span>
             <span class="w-1/2 overflow-hidden bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Movs: {{ movesCount }}</span>
-            <button class="btn btn-blue">Ver todos</button>
+            <button class="btn btn-blue"><a :href="'/category/'+name">Ver todos</a></button>
         </div>
     </div>
 </template>

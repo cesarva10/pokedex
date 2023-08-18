@@ -16,7 +16,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h2>Tipos de Pokémon:</h2>
+                    <h1>Tipos de Pokémon:</h1>
                     <div class="flex flex-wrap">
                         <CardType
                             v-for="(item, index) in pokemonTypes"
