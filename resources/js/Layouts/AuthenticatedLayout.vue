@@ -35,6 +35,9 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('pokemons.index')" :active="route().current('pokemons.index')">
                                     Pokemones
                                 </NavLink>
+                                <NavLink :href="route('types.index')" :active="route().current('types.index')">
+                                    Tipos de Pokemón
+                                </NavLink>
                             </div>
                         </div>
 

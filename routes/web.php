@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PokemonController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('pokemons', PokemonController::class);
     Route::resource('favorites', FavoriteController::class);
+    Route::resource('types', TypeController::class);
 });
 
 require __DIR__.'/auth.php';

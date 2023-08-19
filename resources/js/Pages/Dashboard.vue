@@ -18,7 +18,7 @@
 
 </script>
 
-<template>
+<template class="bg-gradient-to-r from-cyan-500 to-blue-500">
     <Head title="Inicio" />
 
     <AuthenticatedLayout>

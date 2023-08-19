@@ -14,10 +14,10 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        $favoritesUser = Favorite::where('user', Auth::id())->get();
+        $favoritesData = $this->getFavoritesData();
 
         return Inertia::render('Favorites/Index', [
-            'favoritesUser' => $favoritesUser
+            'favoritesData' => $favoritesData
         ]);
     }
 
@@ -43,5 +43,36 @@ class FavoriteController extends Controller
     {
         $pokemon->delete();
         return redirect()->route('favorites.index')->with('success','Pokemon has been deleted successfully');
+    }
+
+    public function getFavorites(){
+        return Favorite::where('user', Auth::id())
+                        ->get();
+    }
+
+    public function getFavoritesData(){
+        $favorites = $this->getFavorites();
+        $favoritesData = [];
+
+        foreach($favorites as $favorite){
+            $pokemon = new PokemonController();
+            $pokemonData = $pokemon->getPokemon($favorite->pokemon);
+            $pokemonData->favorite = $favorite;
+            array_push($favoritesData, $pokemonData);
+        }
+
+        return $favoritesData;
+    }
+
+    public function getRecentFavorites($limit) {
+        return Favorite::latest('created_at')
+                        ->take($limit)
+                        ->get();
+    }
+
+    public function isFavorite($pokemon) {
+        return Favorite::where('user', Auth::id())
+                        ->where('pokemon', $pokemon)
+                        ->first();
     }
 }

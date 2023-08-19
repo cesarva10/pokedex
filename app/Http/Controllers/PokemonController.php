@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favorite;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use Inertia\Inertia;
@@ -12,9 +10,15 @@ use Inertia\Inertia;
 class PokemonController extends Controller
 {
     public function index(){
+        $favorite = new FavoriteController();
+        $type = new TypeController();
+
+        $recentFavorites = $favorite->getRecentFavorites(4);
+        $pokemonTypes = $type->getPokemonTypes();
+
         return Inertia::render('Dashboard', [
-            'pokemonTypes' => $this->getTypes(),
-            'recentFavorites' => $this->getRecentFavorites(4),
+            'pokemonTypes' => $pokemonTypes,
+            'recentFavorites' => $recentFavorites,
         ]);
     }
 
@@ -24,11 +28,13 @@ class PokemonController extends Controller
     public function show(String $pokemon)
     {  
         $pokemon = $this->getPokemon($pokemon);
-        $favorite = $this->isFavorite($pokemon->id);
+
+        $favorite = new FavoriteController();
+        $isFavorite = $favorite->isFavorite($pokemon->id);
 
         return Inertia::render('Pokemon/Show', [
             'pokemon' => $pokemon,
-            'favorite' => $favorite
+            'favorite' => $isFavorite
         ]);
     }
 
@@ -51,16 +57,6 @@ class PokemonController extends Controller
         dd($response_body);
     }
 
-    public function getType(Request $request){
-        $client = new Client();
-
-        $gRequest = new GuzzleRequest('GET', 'https://pokeapi.co/api/v2/type/'.$request->type);
-        $response = $client->send($gRequest);
-
-        $response_body = (string)$response->getBody();
-        dd($response_body);
-    }
-
     public function getTypes($limit = null){
         $client = new Client();
 
@@ -68,17 +64,5 @@ class PokemonController extends Controller
         $response = $client->send($gRequest);
         
         return json_decode($response->getBody());
-    }
-
-    public function getRecentFavorites($limit) {
-        return Favorite::latest('created_at')
-                        ->take(4)
-                        ->get();
-    }
-
-    public function isFavorite($pokemon) {
-        return Favorite::where('user', Auth::id())
-                        ->where('pokemon', $pokemon)
-                        ->first();
     }
 }
