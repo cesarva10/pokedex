@@ -3,7 +3,7 @@
     import { ref, onMounted } from 'vue';
 
     const props = defineProps({
-        favorite: Object
+        pokemon: Object
     });
 
     const name = ref('');    
@@ -14,9 +14,16 @@
 
     onMounted(async () => {
         try {
-            const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${props.favorite.pokemon}`);
+            let id = props.pokemon.pokemon; 
+            if (props.pokemon && props.pokemon.name) {
+                id = props.pokemon.name;
+            } else if (props.pokemon && props.pokemon.pokemon && typeof props.pokemon.pokemon === 'object') {
+                id = props.pokemon.pokemon.name;
+            }
+
+            const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
             const typeData = response.data;
-            name.value = typeData.name;            
+            name.value = typeData.name;
             type.value = typeData.types[0].type.name; 
             abilities.value = typeData.abilities; 
             movesCount.value = typeData.moves.length; 

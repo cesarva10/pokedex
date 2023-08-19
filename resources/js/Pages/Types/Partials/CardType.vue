@@ -35,7 +35,7 @@
             <span class="w-1/2 overflow-hidden bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Pokemones: {{ pokemonsCount }}</span>
             <span class="w-1/2 overflow-hidden bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Movs: {{ movesCount }}</span>
             <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                <a :href="'/categories/'+name">Ver todos</a>
+                <a :href="'/types/'+name">Ver todos</a>
             </button>
         </div>
     </div>

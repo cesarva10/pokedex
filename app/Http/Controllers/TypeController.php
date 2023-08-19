@@ -16,7 +16,7 @@ class TypeController extends Controller
     public function index()
     {
         $pokemonTypes = $this->getpokemonTypes();
-
+        
         return Inertia::render('Types/Index', [
             'pokemonTypes' => $pokemonTypes
         ]);
@@ -41,15 +41,20 @@ class TypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Type $model)
+    public function show(String $type)
     {
-        //
+        $pokemonType = $this->getpokemonType($type);
+        
+        return Inertia::render('Types/Show', [
+            'typeData' => $pokemonType,            
+            'pokemons' => $pokemonType->pokemon
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Type $model)
+    public function edit(String $type)
     {
         //
     }
@@ -57,7 +62,7 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Type $model)
+    public function update(Request $request, String $type)
     {
         //
     }
@@ -65,7 +70,7 @@ class TypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Type $model)
+    public function destroy(String $type)
     {
         //
     }    

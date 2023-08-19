@@ -1,13 +1,13 @@
 <script setup>
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
     import Carousel from '@/Pages/Pokemon/Partials/Carousel.vue';
-    import CardTypeList from '@/Pages/Pokemon/Partials/CardTypeList.vue';
-    import CardFavoriteList from '@/Pages/Pokemon/Partials/CardFavoriteList.vue';
+    import CardTypeList from '@/Pages/Types/Partials/CardTypeList.vue';
+    import CardPokemonList from '@/Pages/Pokemon/Partials/CardPokemonList.vue';
     import { Head } from '@inertiajs/vue3';
 
     defineProps({
         pokemonTypes: {
-            types: Array,
+            types: Object,
             default: null
         },
         recentFavorites: {
@@ -28,9 +28,9 @@
 
         <Carousel />
 
-        <CardFavoriteList :favorites="recentFavorites" :limit=4 />
+        <CardPokemonList :pokemons="recentFavorites" :limit=4 />
 
-        <CardTypeList :types="pokemonTypes" />   
+        <CardTypeList :types="pokemonTypes" :limit=4 />   
                        
     </AuthenticatedLayout>
 </template>
