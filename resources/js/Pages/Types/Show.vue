@@ -1,7 +1,7 @@
 <script setup>
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
     import { Head } from '@inertiajs/vue3';
-    import CardPokemonList from '@/Pages/Pokemon/Partials/CardPokemonList.vue';
+    import PokemonList from '@/Pages/Pokemon/Partials/PokemonList.vue';
 
     defineProps({
         pokemons: {
@@ -21,12 +21,11 @@
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Pokemones de tipo: {{ typeData.name }}</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Pokemones</h2>
         </template>   
 
-        <CardPokemonList 
-            :pokemons="pokemons" 
-            :limit="Object.keys(pokemons).length" 
+        <PokemonList 
+            :pokemons="pokemons"
             :hasPagination="true"
             :title="'Todos los pokemones: '" 
         />

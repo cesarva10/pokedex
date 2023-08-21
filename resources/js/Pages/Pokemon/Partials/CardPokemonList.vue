@@ -2,14 +2,10 @@
   import CardPokemon from '@/Pages/Pokemon/Partials/CardPokemon.vue';
   import { ref, computed } from 'vue';
 
-  const { pokemons, limit, title, hasPagination } = defineProps({
+  const { pokemons, title, hasPagination } = defineProps({
     pokemons: {
       type: Object,
       default: null,
-    },
-    limit: {
-      type: Number,
-      default: 0,
     },
     title: {
       type: String,
@@ -54,7 +50,7 @@
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 text-gray-900">
           <h2 class="text-2xl font-extrabold dark:text-white mb-4">{{ title }}</h2>
-          <div v-for="(pokemon, index) in visibleItems.slice(0, limit)" :key="index" class="inline-block w-1/4 mb-2 px-2">
+          <div v-for="(pokemon, index) in visibleItems" :key="index" class="inline-block w-1/4 mb-2 px-2">
             <CardPokemon 
               :pokemon="pokemon" 
               class="inline-block w-full"

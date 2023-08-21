@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use Inertia\Inertia;
-use Ramsey\Uuid\Type\Integer;
 
 class PokemonController extends Controller
 {
     public function index(){
-        $pokemons = $this->getPokemons();
+        $pokemons = $this->getPokemonsData(25);
 
         return Inertia::render('Pokemon/Index', [
-            'pokemons' => $pokemons->results,
+            'pokemons' => $pokemons,
         ]);
     }
 
@@ -50,14 +48,16 @@ class PokemonController extends Controller
         $response = $client->send($gRequest);
 
         return json_decode($response->getBody());
-    }
+    }   
 
-    public function getTypes($limit = null){
-        $client = new Client();
+    public function getPokemonsData($limit){
+        $pokemons = $this->getPokemons($limit)->results;
+        $pokemonsData = [];
 
-        $gRequest = new GuzzleRequest('GET', 'https://pokeapi.co/api/v2/type?limit='.$limit);
-        $response = $client->send($gRequest);
-        
-        return json_decode($response->getBody());
+        foreach($pokemons as $pokemon){;
+            $pokemonData = $this->getPokemon($pokemon->name);
+            array_push($pokemonsData, $pokemonData);
+        }
+        return $pokemonsData;
     }
 }

@@ -27,11 +27,9 @@ class TypeController extends Controller
      */
     public function show(String $type)
     {
-        $pokemonType = $this->getpokemonType($type);
-        
-        return Inertia::render('Types/Show', [
-            'typeData' => $pokemonType,            
-            'pokemons' => $pokemonType->pokemon
+        $pokemonType = $this->getPokemonTypeData($type, 25);
+        return Inertia::render('Types/Show', [    
+            'pokemons' => $pokemonType
         ]);
     }
 
@@ -51,5 +49,18 @@ class TypeController extends Controller
         $response = $client->send($gRequest);
 
         return json_decode($response->getBody());
+    }
+
+    public function getPokemonTypeData(String $type, $limit){
+        $pokemons = $this->getPokemonType($type)->pokemon;
+        $typeData = [];
+
+        foreach(array_slice($pokemons, 0, $limit) as $pokemon){
+            $pokemonData = new PokemonController();
+            $data = $pokemonData->getPokemon($pokemon->pokemon->name);
+            array_push($typeData, $data);
+        }
+
+        return $typeData;
     }
 }

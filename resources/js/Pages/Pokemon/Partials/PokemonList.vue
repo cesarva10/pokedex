@@ -1,18 +1,17 @@
 <script setup>
     import ToastEmpty from '@/Pages/Pokemon/Partials/ToastEmpty.vue';
-    import moment from 'moment'
     import { ref, computed } from 'vue';
 
-    const { favoritesData } = defineProps({
-        favoritesData: {
+    const { pokemons } = defineProps({
+        pokemons: {
             type: Object,
             default: null,
         }
     });
     
     const currentPage = ref(1);
-    const itemsPerPage = 10;
-    const items = ref(favoritesData);
+    const itemsPerPage = 5;
+    const items = ref(pokemons);
 
     const totalPages = computed(() => Math.ceil(items.value.length / itemsPerPage));
     const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage);
@@ -32,18 +31,15 @@
         }
     };
 
-    const deleteFavorite = (pokemon) => {
-        axios.delete('/favorites/'+pokemon)
-            .then(response => {
-                const index = items.value.findIndex(item => item.id === pokemon);
-                if (index !== -1) {
-                    items.value.splice(index, 1);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    };
+    
+    function parseId (pokemon) {
+        props.pokemon.pokemon; 
+        if (props.pokemon && props.pokemon.name) {
+            id = props.pokemon.name;
+        } else if (props.pokemon && props.pokemon.pokemon && typeof props.pokemon.pokemon === 'object') {
+            id = props.pokemon.pokemon.name;
+        }
+    }
 
     function capitalize(s) {
         return s.charAt(0).toUpperCase() + s.slice(1);
@@ -55,8 +51,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h2 class="text-2xl font-extrabold dark:text-white mb-4">Favoritos recientes:</h2>
-                    <ToastEmpty v-if="!favoritesData.length" />
+                    <h2 class="text-2xl font-extrabold dark:text-white mb-4">Todos los pokemones</h2>
+                    <ToastEmpty v-if="!pokemons.length" />
                     <div v-else class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="flex items-center justify-between pb-4">                            
                             <span class="mx-5 text-lg text-gray-700 dark:text-gray-400">
@@ -73,13 +69,13 @@
                                         Pokemon
                                     </th>
                                     <th scope="col" class="px-6 py-3">
+                                        Id
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         Nombre
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Tipo
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Agregado
                                     </th>
                                     <th scope="col" class="px-6 py-3 w-1/6">
                                         Acción
@@ -87,32 +83,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(pokemon, index) in visibleItems" :key="pokemon.id" :id="pokemon.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr v-for="pokemon in visibleItems" :key="pokemon.id" :id="pokemon.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <img class="w-20 h-30" :src="pokemon.sprites.other.dream_world.front_default" alt="Pokemon">                                        
+                                        <img class="w-20 h-30" :src="pokemon.sprites.other['official-artwork'].front_default" alt="Pokemon">                                        
                                     </th>
+                                    <td class="px-6 py-4">
+                                        <div class="pl-3">
+                                            <div class="text-base font-semibold">{{ pokemon.id }}</div>
+                                        </div>  
+                                    </td>
                                     <td class="px-6 py-4">
                                         <div class="pl-3">
                                             <div class="text-base font-semibold">{{ capitalize(pokemon.name) }}</div>
                                         </div>  
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div v-for="type in pokemon.types" :key="type.slot" class="text-base font-semibold inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                            {{ capitalize(type.type.name) }}
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
                                         <div class="pl-3">
-                                            <div class="text-base font-semibold">{{ moment(pokemon.favorite.created_at).format('DD/MM/YYYY h:mm:ss a') }}</div>
+                                            <div v-for="type in pokemon.types" :key="type.slot" class="text-base font-semibold inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                                                {{ capitalize(type.type.name) }}
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 flex">
                                         <a :href="'/pokemons/'+pokemon.name" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mx-2 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                                             Ver
                                         </a>
-                                        <button @click="deleteFavorite(pokemon.id)" class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button">
-                                            Eliminar
-                                        </button>
                                     </td>
                                 </tr>
                             </tbody>

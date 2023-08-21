@@ -58,7 +58,7 @@ defineProps({
 
         <div class="mx-auto p-6 lg:p-8">
             <div class="flex justify-center my-12">
-                <img src="/images/pokeboll.png" class="rotate" width="20%" alt="Logo pokebola" />
+                <img src="/images/pokemon.png" class="rotate" width="20%" alt="Logo pokebola" />
             </div>            
         </div>  
         <footer class="bg-white rounded-lg shadow dark:bg-gray-900 m-4 end-px">
@@ -66,7 +66,7 @@ defineProps({
                 <div class="sm:flex sm:items-center sm:justify-between">
                         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Pokedex</span>
                         <img src="/images/loading-pikachu.gif" class="h-20 mr-3" alt="Pikachu GIF" />
-                    <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                    <ul class="flex flex-wrap items-center mb-6 text-xl font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
                         <li>
                             <a href="https://github.com/cesarva10/" class="mr-4 hover:underline md:mr-6 ">GitHub</a>
                         </li>

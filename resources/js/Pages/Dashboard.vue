@@ -30,7 +30,6 @@
 
         <CardPokemonList
             :pokemons="recentFavorites" 
-            :limit=5 
             :hasPagination="false"
             :title="'Favoritos recientemente: '"             
             :hasShowMore="true" 

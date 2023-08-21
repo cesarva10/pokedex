@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import CardPokemonList from './Partials/CardPokemonList.vue';
+import PokemonList from './Partials/PokemonList.vue';
 import { Head } from '@inertiajs/vue3';
 
 defineProps({
@@ -19,9 +19,8 @@ defineProps({
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Pokemons</h2>
         </template>
 
-        <CardPokemonList 
+        <PokemonList 
             :pokemons="pokemons" 
-            :limit="Object.keys(pokemons).length" 
             :title="'Todos los pokemones'"
             :hasPagination="true"
         />

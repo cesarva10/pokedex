@@ -23,7 +23,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h2 class="text-2xl font-extrabold dark:text-white mb-4">Tipos de pokemón: </h2>
+                    <h2 class="text-2xl font-extrabold dark:text-white mb-4">Tipos de pokemón </h2>
                     <div v-if="!types.results.length">No tienes pokemones en tu lista de favoritos</div>
                     <div v-for="(type, index) in types.results.slice(0, limit)" :key="index" class="inline-block w-1/4 mb-2 px-2">
                         <CardType        
