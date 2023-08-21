@@ -10,7 +10,6 @@
 
     const emit = defineEmits(['deleted']);
 
-
     const deleteFavorite = (pokemon) => {
         axios.delete('/favorites/'+pokemon)
             .then(response => {                

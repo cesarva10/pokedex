@@ -27,7 +27,7 @@ class TypeController extends Controller
      */
     public function show(String $type)
     {
-        $pokemonType = $this->getPokemonTypeData($type, 25);
+        $pokemonType = $this->getPokemonTypeData($type, 15);
         return Inertia::render('Types/Show', [    
             'pokemons' => $pokemonType
         ]);

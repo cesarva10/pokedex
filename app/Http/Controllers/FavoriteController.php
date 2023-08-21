@@ -77,7 +77,8 @@ class FavoriteController extends Controller
     }
 
     public function getRecentFavorites($limit) {
-        return Favorite::latest('created_at')
+        return Favorite::where('user', Auth::id())
+                        ->latest('created_at')
                         ->take($limit)
                         ->get();
     }

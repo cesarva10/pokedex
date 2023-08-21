@@ -4,6 +4,7 @@
     import CardTypeList from '@/Pages/Types/Partials/CardTypeList.vue';
     import CardPokemonList from '@/Pages/Pokemon/Partials/CardPokemonList.vue';
     import { Head } from '@inertiajs/vue3';
+import SearchPokemon from './Pokemon/Partials/SearchPokemon.vue';
 
     defineProps({
         pokemonTypes: {
@@ -28,10 +29,12 @@
 
         <Carousel />
 
+        <SearchPokemon />
+
         <CardPokemonList
             :pokemons="recentFavorites" 
             :hasPagination="false"
-            :title="'Favoritos recientemente: '"             
+            :title="'Favoritos recientemente'"             
             :hasShowMore="true" 
         />
 

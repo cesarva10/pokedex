@@ -49,7 +49,7 @@
             :weight="pokemon.weight" 
             :type="pokemon.types[0].type.name" 
             :baseExperience="pokemon.base_experience" 
-            :imageUrl="pokemon.sprites.other.dream_world.front_default"
+            :imageUrl="pokemon.sprites.other['official-artwork'].front_default"
             :abilities="pokemon.abilities"
         />
         

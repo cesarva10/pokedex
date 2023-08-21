@@ -9,7 +9,7 @@ use Inertia\Inertia;
 class PokemonController extends Controller
 {
     public function index(){
-        $pokemons = $this->getPokemonsData(25);
+        $pokemons = $this->getPokemonsData(15);
 
         return Inertia::render('Pokemon/Index', [
             'pokemons' => $pokemons,
