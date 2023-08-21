@@ -30,17 +30,7 @@
         currentPage.value++;
         }
     };
-
     
-    function parseId (pokemon) {
-        props.pokemon.pokemon; 
-        if (props.pokemon && props.pokemon.name) {
-            id = props.pokemon.name;
-        } else if (props.pokemon && props.pokemon.pokemon && typeof props.pokemon.pokemon === 'object') {
-            id = props.pokemon.pokemon.name;
-        }
-    }
-
     function capitalize(s) {
         return s.charAt(0).toUpperCase() + s.slice(1);
     }

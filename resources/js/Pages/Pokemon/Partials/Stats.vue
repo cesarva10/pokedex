@@ -4,6 +4,10 @@
     const props = defineProps({
         stats: Object,
     });
+
+    function capitalize(s) {
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    }
 </script>
 
 <template>
@@ -14,7 +18,7 @@
                     <h2 class="text-2xl font-extrabold dark:text-white mb-4">Estadísticas: </h2>
                     <div class="mb-4" v-for="(stat, index) in stats" :key="index" :type="stat">
                         <div class="flex justify-between mb-1">
-                            <span class="text-base font-medium text-blue-700 dark:text-white">{{ stat.stat.name }}</span>
+                            <span class="text-base font-medium text-blue-700 dark:text-white">{{ capitalize(stat.stat.name) }}</span>
                             <span class="text-sm font-medium text-blue-700 dark:text-white">{{ stat.base_stat }}%</span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">

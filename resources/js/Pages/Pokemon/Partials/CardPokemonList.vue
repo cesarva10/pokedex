@@ -12,37 +12,11 @@ import ToastEmpty from './ToastEmpty.vue';
       type: String,
       default: "",
     },
-    hasPagination: {
-      type: Boolean,
-      default: false,
-    },
     hasShowMore: {
       type: Boolean,
       default: false,
     },
   });
-
-  const currentPage = ref(1);
-  const itemsPerPage = 8;
-  const items = ref(pokemons);
-
-  const totalPages = computed(() => Math.ceil(items.value.length / itemsPerPage));
-  const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage);
-  const endIndex = computed(() => startIndex.value + itemsPerPage);
-
-  const visibleItems = computed(() => items.value.slice(startIndex.value, endIndex.value));
-
-  const prevPage = () => {
-    if (currentPage.value > 1) {
-      currentPage.value--;
-    }
-  };
-
-  const nextPage = () => {
-    if (currentPage.value < totalPages.value) {
-      currentPage.value++;
-    }
-  };
 </script>
 
 <template>
@@ -52,34 +26,17 @@ import ToastEmpty from './ToastEmpty.vue';
         <div class="p-6 text-gray-900">
           <h2 class="text-2xl font-extrabold dark:text-white mb-4">{{ title }}</h2>
           <ToastEmpty v-if="!pokemons.length" />
-          <div v-else>
-            <div v-for="(pokemon, index) in visibleItems" :key="index" class="inline-block w-1/4 mb-2 px-2">
+          <div v-else class="grid xs:grid-cols-1 sm:grid-cols-4">
+            <div v-for="(pokemon, index) in pokemons" :key="index" class="mb-2 px-2">
               <CardPokemon 
                 :pokemon="pokemon" 
-                class="inline-block w-full"
+                class="w-full"
               />
             </div>
-            <div v-if="hasPagination" class="mt-4 flex justify-center">
-              <button
-                type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                @click="prevPage"
-                :disabled="currentPage === 1">
-                  Anterior
-              </button>
-              <button
-                type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 ml-1 mb-1 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                @click="nextPage"
-                :disabled="currentPage === totalPages">
-                  Siguiente
-              </button>
-            </div>
-            <br/>
-            <button v-if="hasShowMore" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                <a href="/favorites/">Ver más</a>
-            </button>
           </div>
+          <button v-if="hasShowMore && pokemons.length" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 mt-0 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+              <a href="/favorites/">Ver más</a>
+          </button>
         </div>
       </div>
     </div>

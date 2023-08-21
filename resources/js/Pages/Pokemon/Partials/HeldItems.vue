@@ -2,6 +2,10 @@
     const props = defineProps({
         held_items: Object,
     });
+
+    function capitalize(s) {
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    }
 </script>
 
 <template>
@@ -14,7 +18,7 @@
                         <div v-if="held_items.length > 0">
                             <div class="mb-4" v-for="(held_item, index) in held_items" :key="index">
                                 <span class="bg-blue-100 text-blue-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                                    {{ held_item.item.name }}
+                                    {{ capitalize(held_item.item.name) }}
                                 </span>
                             </div>
                         </div>                        

@@ -47,9 +47,10 @@
             :name="pokemon.name" 
             :height="pokemon.height" 
             :weight="pokemon.weight" 
-            :type="pokemon.types[0].type.name" 
+            :types="pokemon.types"
             :baseExperience="pokemon.base_experience" 
-            :imageUrl="pokemon.sprites.other['official-artwork'].front_default"
+            :imageUrl="pokemon.sprites.other['official-artwork'].front_default"            
+            :imageShinyUrl="pokemon.sprites.other['official-artwork'].front_shiny"
             :abilities="pokemon.abilities"
         />
         

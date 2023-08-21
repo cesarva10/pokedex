@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use Inertia\Inertia;
 
@@ -21,13 +22,19 @@ class PokemonController extends Controller
      */
     public function show(String $pokemon)
     {  
-        $pokemon = $this->getPokemon($pokemon);
+        $pokemonData = $this->getPokemon($pokemon);
+
+        if(!$pokemonData)
+            return Inertia::render('404', [
+                'module' => 'pokemon',
+                'value' => $pokemon
+            ]);
 
         $favorite = new FavoriteController();
-        $isFavorite = $favorite->isFavorite($pokemon->id);
+        $isFavorite = $favorite->isFavorite($pokemonData->id);
 
         return Inertia::render('Pokemon/Show', [
-            'pokemon' => $pokemon,
+            'pokemon' => $pokemonData,
             'favorite' => $isFavorite
         ]);
     }
@@ -35,8 +42,12 @@ class PokemonController extends Controller
     public function getPokemon(String $pokemon){
         $client = new Client();
 
-        $gRequest = new GuzzleRequest('GET', 'https://pokeapi.co/api/v2/pokemon/'.$pokemon);
-        $response = $client->send($gRequest);
+        try {
+            $gRequest = new GuzzleRequest('GET', 'https://pokeapi.co/api/v2/pokemon/'.$pokemon);
+            $response = $client->send($gRequest);
+        } catch (ClientException $e) {
+            return null;            
+        }
 
         return json_decode($response->getBody());
     }

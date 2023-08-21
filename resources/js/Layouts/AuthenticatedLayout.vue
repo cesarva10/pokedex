@@ -119,7 +119,16 @@ const showingNavigationDropdown = ref(false);
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            Inicio
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
+                            Favoritos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('pokemons.index')" :active="route().current('pokemons.index')">
+                            Pokemones
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('types.index')" :active="route().current('types.index')">
+                            Tipos de Pokemón
                         </ResponsiveNavLink>
                     </div>
 
@@ -133,9 +142,9 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile.edit')"> Perfil </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                                Cerrar sesión
                             </ResponsiveNavLink>
                         </div>
                     </div>

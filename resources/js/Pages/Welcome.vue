@@ -58,7 +58,7 @@ defineProps({
 
         <div class="mx-auto p-6 lg:p-8">
             <div class="flex justify-center my-12">
-                <img src="/images/pokemon.png" class="rotate" width="20%" alt="Logo pokebola" />
+                <img src="/images/pokemon.png" class="rotate xs:w-auto sm:w-96" alt="Logo pokebola" />
             </div>            
         </div>  
         <footer class="bg-white rounded-lg shadow dark:bg-gray-900 m-4 end-px">
