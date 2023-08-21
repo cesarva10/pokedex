@@ -1,12 +1,50 @@
 <script setup>
-  import moment from 'moment'
+    import ToastFavoritesEmpty from '@/Pages/Pokemon/Partials/ToastFavoritesEmpty.vue';
+import moment from 'moment'
+    import { ref, computed } from 'vue';
 
-    defineProps({
+    const { favoritesData } = defineProps({
         favoritesData: {
             type: Object,
-            default: null
+            default: null,
         }
     });
+    
+    const currentPage = ref(1);
+    const itemsPerPage = 10;
+    const items = ref(favoritesData);
+
+    const totalPages = computed(() => Math.ceil(items.value.length / itemsPerPage));
+    const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage);
+    const endIndex = computed(() => startIndex.value + itemsPerPage);
+
+    const visibleItems = computed(() => items.value.slice(startIndex.value, endIndex.value));
+
+    const prevPage = () => {
+        if (currentPage.value > 1) {
+        currentPage.value--;
+        }
+    };
+
+    const nextPage = () => {
+        if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+        }
+    };
+
+    const deleteFavorite = (pokemon) => {
+        axios.delete('/favorites/'+pokemon)
+            .then(response => {
+                const index = items.value.findIndex(item => item.id === pokemon);
+                if (index !== -1) {
+                    items.value.splice(index, 1);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
 </script>
 
 <template>
@@ -15,61 +53,24 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h2 class="text-2xl font-extrabold dark:text-white mb-4">Favoritos recientes:</h2>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <div class="flex items-center justify-between pb-4">
-                            <div>
-                                <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
-                                    <svg class="w-3 h-3 text-gray-500 dark:text-gray-400 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
-                                    </svg>
-                                    Últimos 30 días
-                                    <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                    </svg>
-                                </button>
-                                <!-- Dropdown menu -->
-                                <div id="dropdownRadio" class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                                    <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
-                                        <li>
-                                            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                <input id="filter-radio-example-1" type="radio" value="" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="filter-radio-example-1" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Ayer</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                <input checked="" id="filter-radio-example-2" type="radio" value="" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="filter-radio-example-2" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Últimos 7 días</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                <input id="filter-radio-example-4" type="radio" value="" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="filter-radio-example-4" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Último mes</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                <input id="filter-radio-example-5" type="radio" value="" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="filter-radio-example-5" class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Último año</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <label for="table-search" class="sr-only">Buscar</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                                </div>
-                                <input type="text" id="table-search" class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar pokemón favorito">
-                            </div>
+                    <ToastFavoritesEmpty v-if="!favoritesData.length" />
+                    <div v-else class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <div class="flex items-center justify-between pb-4">                            
+                            <span class="mx-5 text-lg text-gray-700 dark:text-gray-400">
+                                Página <span class="font-semibold text-gray-900 dark:text-white">{{ currentPage }}</span> de <span class="font-semibold text-gray-900 dark:text-white">{{ totalPages }}</span>
+                            </span>
+                            <span class="mx-5 text-lg text-gray-700 dark:text-gray-400">
+                                Total de pokemones: <span class="font-semibold text-gray-900 dark:text-white">{{ items.length }}</span>
+                            </span>
                         </div>
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <thead class="text-md text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
                                         Pokemon
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Nombre
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Tipo
@@ -77,46 +78,64 @@
                                     <th scope="col" class="px-6 py-3">
                                         Agregado
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 w-1/6">
                                         Acción
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(pokemon, index) in favoritesData" :key="pokemon.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr v-for="(pokemon, index) in visibleItems" :key="pokemon.id" :id="pokemon.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <img class="w-20 h-30" :src="pokemon.sprites.other.dream_world.front_default" alt="Pokemon">
-                                        <div class="pl-3">
-                                            <div class="text-base font-semibold">{{ pokemon.name.toUpperCase() }}</div>
-                                        </div>                                          
+                                        <img class="w-20 h-30" :src="pokemon.sprites.other.dream_world.front_default" alt="Pokemon">                                        
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{ pokemon.types[0].type.name }}
+                                        <div class="pl-3">
+                                            <div class="text-base font-semibold">{{ pokemon.name.toUpperCase() }}</div>
+                                        </div>  
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ moment(pokemon.favorite.created_at).format('D/MM/YYYY, h:mm:ss a') }}
+                                        <div class="pl-3">
+                                            <div class="text-base font-semibold">{{ pokemon.types[0].type.name }}</div>
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a :href="'/pokemons/' + pokemon.name" class="mx-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">Ver</a>
-                                        <a :href="'/favorites/delete/' + pokemon.name" class="mx-2 font-medium text-red-600 dark:text-red-500 hover:underline">Eliminar</a>
+                                        <div class="pl-3">
+                                            <div class="text-base font-semibold">{{ moment(pokemon.favorite.created_at).format('DD/MM/YYYY h:mm:ss a') }}</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 flex">
+                                        <a :href="'/pokemons/'+pokemon.name" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm mx-2 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                                            Ver
+                                        </a>
+                                        <button @click="deleteFavorite(pokemon.id)" class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button">
+                                            Eliminar
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <nav class="flex items-center justify-between p-6" aria-label="Table navigation">
-                            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Mostrando <span class="font-semibold text-gray-900 dark:text-white">1-10</span> de <span class="font-semibold text-gray-900 dark:text-white">{{ favoritesData.length }}</span></span>
-                            <ul class="inline-flex -space-x-px text-sm h-8">
-                                <li>
-                                    <a href="#" class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                                </li>                                
-                                <li>
-                                    <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="width-full flex items-center my-5 items-center mx-5">
+                            <button
+                                type="button"
+                                class="flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                @click="prevPage"
+                                :disabled="currentPage === 1">
+                                    <svg class="w-3.5 h-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+                                    </svg>
+                                    Anterior
+                            </button>
+                            <button
+                                type="button"
+                                class="flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                @click="nextPage"
+                                :disabled="currentPage === totalPages">                                    
+                                    Siguiente
+                                    <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                    </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

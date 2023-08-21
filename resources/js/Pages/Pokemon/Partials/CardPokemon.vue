@@ -27,7 +27,7 @@
             type.value = typeData.types[0].type.name; 
             abilities.value = typeData.abilities; 
             movesCount.value = typeData.moves.length; 
-            image.value = typeData.sprites.other.dream_world.front_default;
+            image.value = typeData.sprites.other['official-artwork'].front_default;
         } catch (error) {
             console.error('Error fetching API data:', error);
         }
@@ -43,15 +43,18 @@
                 {{ type }}
             </p>
         </div>
-        <div class="px-6 pt-4 pb-2">
+        <div class="px-6 pt-4 pb-2 bg-sky-100">
             <span v-for="(ability, index) in abilities"
                 :key="index"
                 class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
                 {{ ability.ability.name }}
-            </span>
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                <a :href="'/pokemons/'+name">Ver pokemón</a>
-            </button>
+            </span><br/>
+            <a :href="'/pokemons/'+name" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Detalles
+                <svg class="w-4 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                </svg>
+            </a>
         </div>
     </div>
 </template>

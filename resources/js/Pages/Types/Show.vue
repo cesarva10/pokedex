@@ -7,7 +7,11 @@
         pokemons: {
             types: Object,
             default: null
-        }
+        },
+        typeData: {
+            types: Object,
+            default: null
+        },
     });
 
 </script>
@@ -17,9 +21,14 @@
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Pokemones</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Pokemones de tipo: {{ typeData.name }}</h2>
         </template>   
 
-        <CardPokemonList :pokemons="pokemons" :limit="Object.keys(pokemons).length" />
+        <CardPokemonList 
+            :pokemons="pokemons" 
+            :limit="Object.keys(pokemons).length" 
+            :hasPagination="true"
+            :title="'Todos los pokemones: '" 
+        />
     </AuthenticatedLayout>
 </template>

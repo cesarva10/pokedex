@@ -1,7 +1,25 @@
 <script setup>
-    const props = defineProps({
-        id: Number,
+    import { defineEmits } from 'vue';
+
+    defineProps({
+        id: {
+            type: Number,
+            default: null,
+        }
     });
+
+    const emit = defineEmits(['deleted']);
+
+
+    const deleteFavorite = (pokemon) => {
+        axios.delete('/favorites/'+pokemon)
+            .then(response => {                
+                emit('deleted');
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
 </script>
 
 <template>
@@ -14,15 +32,9 @@
                     </svg>
                     <span class="sr-only">Ok</span>
                 </div>
-                <div class="ml-3 text-sm font-normal">¡Este pokemon ya está entre tus favoritos!. ¿Deseas eliminarlo de tu pokedex?</div>
-                <button type="button" class="mx-5 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 mt-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
-                    <a :href="'/favorites/store/'+id">Eliminar</a>
-                </button>
-                <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-warning" aria-label="Cerrar">
-                    <span class="sr-only">Cerrar</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
+                <div class="ml-3 mr-5 text-sm font-normal">¡Este pokemon ya está entre tus favoritos!. ¿Deseas eliminarlo de tu pokedex?</div>
+                <button @click="deleteFavorite(id)" class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button">
+                    Eliminar
                 </button>
             </div> 
         </div>

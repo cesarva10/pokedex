@@ -1,7 +1,25 @@
 <script setup>
-    const props = defineProps({
-        id: Number,
+    import axios from 'axios';
+    import { defineEmits } from 'vue';
+
+    defineProps({
+        id: {
+            type: Number,
+            default: null,
+        }
     });
+
+    const emit = defineEmits(['saved']);
+
+    const saveFavorite = (pokemon) => {
+        axios.post('/favorites/', { pokemon: pokemon })
+            .then(response => {
+                emit('saved');
+            })
+            .catch(error => {
+            console.error(error);
+            });
+    };
 </script>
 
 <template>
@@ -15,8 +33,8 @@
                     <span class="sr-only">Alerta</span>
                 </div>
                 <div class="ml-3 text-sm font-normal">¡Este pokemon no está entre tus favoritos!. ¿Deseas agregarlo a tu pokedex?</div>
-                <button type="button" class="mx-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                    <a :href="'/favorites/store/'+id">¡Capturar!</a>
+                <button type="button" @click="saveFavorite(id)" class="mx-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    ¡Capturar!
                 </button>
                 <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-warning" aria-label="Cerrar">
                     <span class="sr-only">Cerrar</span>

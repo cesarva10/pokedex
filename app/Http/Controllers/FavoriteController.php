@@ -27,22 +27,34 @@ class FavoriteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user' => 'required',
-            'pokemon' => 'required'
+            'pokemon' => 'integer|min:1|required'
         ]);
         
-        Favorite::create($request->post());
+        $favorite = new Favorite();
+        $favorite->user = Auth::id();
+        $favorite->pokemon = $request->pokemon;
 
-        return redirect()->route('favorites.index')->with('success','Pokemon has been created successfully.');
+        $favorite->save();
+
+        return $this->index();    
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Favorite $pokemon)
+    public function destroy($id)
     {
+        $pokemon = Favorite::where('user', Auth::id())
+                            ->where('pokemon', $id)
+                            ->first();
+
+        if (!$pokemon) {
+            return response()->json(['message' => 'Registro no encontrado'], 404);
+        }
+
         $pokemon->delete();
-        return redirect()->route('favorites.index')->with('success','Pokemon has been deleted successfully');
+
+        return response()->json('Pokemón favorito eliminado '.$id, 200);
     }
 
     public function getFavorites(){

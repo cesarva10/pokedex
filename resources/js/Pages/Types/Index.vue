@@ -19,6 +19,9 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Tipos de pokemón</h2>
         </template>
 
-        <CardTypeList :types="pokemonTypes"/>
+        <CardTypeList 
+            :types="pokemonTypes"
+            :hasShowMore="false"
+        />
     </AuthenticatedLayout>
 </template>

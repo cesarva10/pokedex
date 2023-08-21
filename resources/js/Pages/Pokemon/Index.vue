@@ -19,6 +19,11 @@ defineProps({
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Pokemons</h2>
         </template>
 
-        <CardPokemonList :pokemons="pokemons" :limit="Object.keys(pokemons).length" />
+        <CardPokemonList 
+            :pokemons="pokemons" 
+            :limit="Object.keys(pokemons).length" 
+            :title="'Todos los pokemones'"
+            :hasPagination="true"
+        />
     </AuthenticatedLayout>
 </template>

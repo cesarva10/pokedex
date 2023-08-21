@@ -7,8 +7,9 @@
     import Stats from './Partials/Stats.vue';
     import ToastFavorite from './Partials/ToastFavorite.vue';
     import ToastNotFavorite from './Partials/ToastNotFavorite.vue';
+    import { ref } from 'vue';
 
-    defineProps({
+    const { pokemon, favorite } = defineProps({
         pokemon: {
             types: Object,
             default: null
@@ -19,6 +20,15 @@
         }
     });
 
+    const isFavorite = ref(favorite);
+
+    const handleDeleted = () => {
+        isFavorite.value = false;
+    };
+
+    const handleSaved = () => {
+        isFavorite.value = true;
+    };
 </script>
 
 <template>
@@ -29,8 +39,8 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Pokemon</h2>
         </template>   
         
-        <ToastFavorite v-if="favorite !== null" :id="pokemon.id" />
-        <ToastNotFavorite v-else :id="pokemon.id" />
+        <ToastFavorite v-if="isFavorite" :id="pokemon.id" @deleted="handleDeleted" />
+        <ToastNotFavorite v-else :id="pokemon.id" @saved="handleSaved" />
         
         <General 
             :id="pokemon.id"

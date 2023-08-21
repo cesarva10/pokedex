@@ -23,22 +23,6 @@ class TypeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(String $type)
@@ -50,30 +34,6 @@ class TypeController extends Controller
             'pokemons' => $pokemonType->pokemon
         ]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(String $type)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, String $type)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(String $type)
-    {
-        //
-    }    
 
     public function getPokemonType(String $type){
         $client = new Client();

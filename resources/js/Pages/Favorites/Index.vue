@@ -12,7 +12,7 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Favorites" />
+    <Head title="Favoritos" />
 
     <AuthenticatedLayout>
         <template #header>
