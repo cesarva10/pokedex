@@ -53,14 +53,6 @@ $ composer install
 - Instalar modulos de Node
   ```$ npm install```
 
-- Instalar Breeze
-  ```$ php artisan breeze:install```
-  Seleccionar la opción: Vue with Inertia y el resto de opciones por defecto
-  
- - Restaurar Views modificadas por defecto por Breeze
-  ```$ git checkout origin/master -- resources```
-  Seleccionar la opción: Vue with Inertia y el resto de opciones por defecto
-
 - Instalar Tailwindcss
   ```$ npm install -D tailwindcss```
 
