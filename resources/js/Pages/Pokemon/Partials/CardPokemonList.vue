@@ -15,7 +15,7 @@ import ToastEmpty from './ToastEmpty.vue';
     hasShowMore: {
       type: Boolean,
       default: false,
-    },
+    }
   });
 </script>
 

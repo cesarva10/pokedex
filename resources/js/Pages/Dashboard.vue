@@ -4,7 +4,7 @@
     import CardTypeList from '@/Pages/Types/Partials/CardTypeList.vue';
     import CardPokemonList from '@/Pages/Pokemon/Partials/CardPokemonList.vue';
     import { Head } from '@inertiajs/vue3';
-import SearchPokemon from './Pokemon/Partials/SearchPokemon.vue';
+    import SearchPokemon from './Pokemon/Partials/SearchPokemon.vue';
 
     defineProps({
         pokemonTypes: {

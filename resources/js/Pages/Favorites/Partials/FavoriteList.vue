@@ -1,6 +1,6 @@
 <script setup>
     import ToastEmpty from '@/Pages/Pokemon/Partials/ToastEmpty.vue';
-    import moment from 'moment'
+    import moment from 'moment';
     import { ref, computed } from 'vue';
 
     const { favoritesData } = defineProps({

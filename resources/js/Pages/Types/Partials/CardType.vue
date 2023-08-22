@@ -30,11 +30,11 @@
 
 <template>
     <div class="w-1/4 rounded overflow-hidden shadow-md">
-        <img class="w-1/3 mx-auto mt-4" :src="'/images/types/'+name+'.png'" alt="Tipo de pokemon">
+        <img class="w-1/3 mx-auto mt-4" :src="'/images/types/'+name+'.png'" alt="Tipo de pokemon" />
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2">{{ capitalize(name) }}</div>
-            </div>
-            <div class="px-6 pt-4 pb-2 bg-amber-100">
+        </div>
+        <div class="px-6 pt-4 pb-2 bg-amber-100">
             <span class="w-1/2 overflow-hidden bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Total: {{ pokemonsCount }}</span>
             <span class="w-1/2 overflow-hidden bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Movs: {{ movesCount }}</span>
             <a :href="'/types/'+name" class="mt-3 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

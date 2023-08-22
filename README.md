@@ -22,7 +22,21 @@ Necesitará instalar:
 * Apache.
 * Un administrador de paquetes de Node ( npm or yarn ).
 
-### Setup
+### Instalar
+Clona el repositorio de git en tu computadora
+
+```$ git clone https://github.com/cesarva10/pokedex```
+
+También puede descargar el repositorio completo como un archivo zip y descomprimirlo en su computadora si no tiene git
+
+Después de clonar la aplicación, debe instalar sus dependencias.
+
+```
+$ cd pokedex
+$ composer install
+```
+
+### Configuración
 - Copiar el archivo `.env.example` y renombrarlo por `.env`
   ```$ cp .env.example .env```
 
@@ -41,6 +55,11 @@ Necesitará instalar:
 
 - Instalar Breeze
   ```$ php artisan breeze:install```
+  Seleccionar la opción: Vue with Inertia y el resto de opciones por defecto
+  
+ - Restaurar Views modificadas por defecto por Breeze
+  ```$ git checkout origin/master -- resources```
+  Seleccionar la opción: Vue with Inertia y el resto de opciones por defecto
 
 - Instalar Tailwindcss
   ```$ npm install -D tailwindcss```
